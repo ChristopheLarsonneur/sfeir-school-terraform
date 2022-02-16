@@ -7,4 +7,10 @@ terraform {
   }
 
   required_version = ">= 0.12"
+
+  backend "s3" {
+    bucket = "tf-workshop-m6"
+    key = "workshop_1"
+    region = "eu-west-3"
+  }
 }
