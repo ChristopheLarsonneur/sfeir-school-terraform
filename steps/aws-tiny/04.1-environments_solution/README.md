@@ -43,29 +43,27 @@
 
    Pour palier à ce setup manuel, le fichier terraform.tf a été modifié.
 
-1. Advanced backend configuration
-
-   ```bash
-   terraform init -backend-config ../
-   ```
-
-2. dev deploy
+2. Advanced backend configuration
 
     ```bash
+    terraform init -backend-config ../
+    ```
+
+3. dev deploy
+
+    ```bash
+    terraform workspace new dev # Pour créer un workspace
     terraform apply --var-file tfvars/dev/variables.tfvars
     ```
 
-3. prod deploy
+4. prod deploy
 
     ```bash
-    terraform workspace create dev # Pour créer un workspace
-    terraform apply --var-file tfvars/dev/variables.tfvars
-
-    terraform workspace create production # Pour créer un workspace
+    terraform workspace new production # Pour créer un workspace
     terraform apply --var-file tfvars/production/variables.tfvars
     ```
 
-4. Cleanup
+5. Cleanup
 
     ```bash
     terraform select dev
@@ -73,4 +71,3 @@
     terraform select production # pour basculer sur l'environnement de production
     terraform destroy
     ```
-

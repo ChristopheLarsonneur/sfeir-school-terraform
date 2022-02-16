@@ -37,7 +37,7 @@ Ensuite, vous pouvez lancer les commandes tel que décrite ci-dessous pour voir 
 
     Et vérifiez les réponses aux questions dans le code avec la réalité de ce que le code a effectué.
 
-    Petite remarque: Si vous n'avez pas réaliser l'amélioration de la configuration du backend, vous risquez de tomber sur une erreur de droits:
+    Petite remarque: Vous risquez de tomber sur une erreur de droits:
 
     ```bash
     $ terraform apply -auto-approve
@@ -66,7 +66,8 @@ Ensuite, vous pouvez lancer les commandes tel que décrite ci-dessous pour voir 
     │     terraform state push errored.tfstate
     ```
 
-    Si tel est le cas, corriger votre appel à `terraform init`, puis comme suggéré, faite un `terraform state push errored.tfstate`
+    Pourquoi?
+    le paramètre `workspace_key_prefix` n'a de sens que dans le contexte d'un workspace. regardez comment créer un workspace et recommencez.
 
 4. Nous souhaitons maintenant déployer en production.
 

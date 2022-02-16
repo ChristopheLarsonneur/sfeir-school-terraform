@@ -58,7 +58,10 @@ data "aws_iam_policy_document" "terraform_bucket_policy" {
         ])
       }
 
-      resources = [try(statement.value.each_accounts, false) ? "${aws_s3_bucket.terraform.arn}/${statement.value.account_name}/*" : aws_s3_bucket.terraform.arn ]
+      resources = try(statement.value.each_accounts, false) ? flatten([ 
+        "${aws_s3_bucket.terraform.arn}/${statement.value.account_name}/*",
+        "${aws_s3_bucket.terraform.arn}/:env/*",
+        ]) : [aws_s3_bucket.terraform.arn ]
 
     }
   }
