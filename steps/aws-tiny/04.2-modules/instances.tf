@@ -7,6 +7,7 @@ resource "aws_instance" "app_server" {
   }
 
   ami           = data.aws_ami.image.id
+
   instance_type = each.value.suffix == "-2" ? var.instance_type : local.instance_type
 
   tags = {

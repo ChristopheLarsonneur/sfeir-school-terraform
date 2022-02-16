@@ -13,7 +13,7 @@ No requirements.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | environmment | Environment to deploy | `string` | n/a | yes |
-| instance\_type | Instance types | `string` | n/a | yes |
+| server\_prefix | servers prefix name | `string` | n/a | yes |
 | servers | Hash of servers to create | `any` | n/a | yes |
 
 ## Outputs

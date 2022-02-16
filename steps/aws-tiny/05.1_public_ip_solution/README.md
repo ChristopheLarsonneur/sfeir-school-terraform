@@ -3,5 +3,3 @@
 1. Modifiez le fichier instance.tf
 
 2. Optionnellement, supprimez le fichier images.tf. En effet, cette resource n'est plus exploitée.
-
-Il existe une autre solution avec le for_each au niveau module. Voyez-vous comment?

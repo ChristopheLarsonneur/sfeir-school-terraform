@@ -16,3 +16,9 @@ resource "aws_instance" "app_server" {
     Name = "${var.server_prefix}AppServerInstance${each.value.suffix}-${var.environment}"
   }
 }
+
+resource "aws_eip" "fixed_public_ip" {
+  for_each = var.servers
+
+  instance = aws_instance.app_server[eack.key].id
+}
