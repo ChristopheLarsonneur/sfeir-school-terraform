@@ -19,7 +19,7 @@
     remote: Total 1806 (delta 230), reused 230 (delta 96), pack-reused 1376
     Receiving objects: 100% (1806/1806), 25.22 MiB | 2.98 MiB/s, done.
     Resolving deltas: 100% (780/780), done.
-    $ cd sfeir-school-terraform/steps/01-installation
+    $ cd sfeir-school-terraform/steps/aws-tiny/01-installation
     $ 
     ```
 
