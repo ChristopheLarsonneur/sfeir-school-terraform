@@ -7,16 +7,28 @@ Ensuite, vous pouvez lancer les commandes tel que décrite ci-dessous pour voir 
 1. Commencez par initialiser votre code terraform avec `terraform init`
 
     Ce code est prévu pour exploiter un bucket s3 pour héberger votre tfstate.
-    Chacun d'entre vous dispose d'un espace dédié à votre workshop dans un bucket S3 partagé.
+    Chacun d'entre vous dispose d'un espace dédié à votre workshop dans un bucket S3 partagé:
 
-    - Le nom du bucket S3 est `tf-workshop-m6`
-    - Le chemin que vous avez l'autorisation d'exploiter est le nom de votre workshop `workshop_X` ex: `workshop_5`
+    https://s3.console.aws.amazon.com/s3/buckets/tf-workshop-m6?region=eu-west-3&tab=objects#
+
+    Ainsi, le workshop_1 peut écrire dans `s3://tf-workshop-m6/workshop_1`. Mais pas dans les autres dossiers (qui peuvent ne pas exister...)
+    Et `terraform` écrira/accédera à un fichier tfstate (format json).
+    Dans notre exercice, il faudra qu'il accède à `s3://tf-workshop-m6/workshop_1/dev/workshop`
+
+    Les informations sont repérés ainsi:
+    - `tf-workshop-m6` est le nom du bucket S3.
+    - `workshop_1` est le préfixe. Il indique un chemin ou trouver le workspace et les fichier json tfstate.
+    - `workshop` est la clé (key). c'est à dire le nom du tfstate sur le bucket S3.
 
     Maintenant, lancez la commande `terraform init` et voyez ce qu'il vous demande et répondez aux questions.
 
     Bon, c'est bien de poser les questions. Mais bon, habituellement, on stocke cela dans un fichier quelque part.
 
-    Ou devons nous mettre ces informations? Astuce: Il s'agit de la configuration du backend.
+    En fait, il nous faut en effet ajouter le bucket S3, la clé ET le prefixe dans un des fichiers terraform.
+    Le préfixe n'a pas été demandé. A nous de l'ajouter. pas d'erreurs pour le moment, mais au moment du déploiement, il ne pourra pas
+    enregistrer le tfstate.
+
+    Donc, ou devons nous mettre ces informations? Astuce: Il s'agit de la configuration du backend.
 
 2. Amélioration de la configuration des backends.
 
@@ -32,7 +44,7 @@ Ensuite, vous pouvez lancer les commandes tel que décrite ci-dessous pour voir 
 3. Maintenant, executez un déploiment en dev
 
     ```bash
-    terraform apply --var-file tfvars/dev/variables.tfvars
+    terraform apply --var-file tfvars/dev/variable.tfvars
     ```
 
     Et vérifiez les réponses aux questions dans le code avec la réalité de ce que le code a effectué.
@@ -40,7 +52,7 @@ Ensuite, vous pouvez lancer les commandes tel que décrite ci-dessous pour voir 
     Petite remarque: Vous risquez de tomber sur une erreur de droits:
 
     ```bash
-    $ terraform apply -auto-approve
+    $ terraform apply --var-file tfvars/dev/variable.tfvars -auto-approve
     aws_instance.app_server["server-2"]: Creating...
     aws_instance.app_server["server-1"]: Creating...
     aws_instance.app_server["server-2"]: Still creating... [10s elapsed]
@@ -68,6 +80,8 @@ Ensuite, vous pouvez lancer les commandes tel que décrite ci-dessous pour voir 
 
     Pourquoi?
     le paramètre `workspace_key_prefix` n'a de sens que dans le contexte d'un workspace. regardez comment créer un workspace et recommencez.
+    
+    petite astuce: supprimez .terraform* pour résoudre un souci de droit...
 
 4. Nous souhaitons maintenant déployer en production.
 
